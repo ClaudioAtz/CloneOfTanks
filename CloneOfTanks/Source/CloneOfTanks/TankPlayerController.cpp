@@ -13,10 +13,24 @@ void ATankPlayerController::BeginPlay() {
 	else {
 		UE_LOG(LogTemp, Warning, TEXT("Not Controlling any tank"));
 	}
+
+	auto PlayerTank = GetPlayerTank();
+	if (PlayerTank) {
+		UE_LOG(LogTemp, Warning, TEXT("I can see Player tank is %s"), *PlayerTank->GetName());
+	}
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("No player tanks!"));
+	}
 }
 
-ATank* ATankPlayerController::GetControlledTank() const {
+ATank* ATankPlayerController::GetControlledTank() const 
+{
 	return Cast<ATank>(GetPawn());
+}
+
+ATank* ATankPlayerController::GetPlayerTank() const
+{
+	return Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 }
 
 
