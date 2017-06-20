@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CloneOfTanks.h"
-#include "TankAimingComponent.h"
+#include "Public/TankAimingComponent.h"
 
 
 // Sets default values for this component's properties
@@ -33,3 +33,14 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	// ...
 }
 
+void UTankAimingComponent::AimAt(const FVector& WorldSpaceAim)
+{
+	auto OurTankName = GetOwner()->GetName();
+	auto BarrelLocation = Barrel->GetComponentLocation();
+	UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s from %s"), *OurTankName, *WorldSpaceAim.ToCompactString(), *BarrelLocation.ToCompactString());
+}
+
+void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent* BarrelToSet)
+{
+	Barrel = BarrelToSet;
+}
