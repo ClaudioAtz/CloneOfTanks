@@ -20,6 +20,9 @@ private:
 
 	virtual void BeginPlay() override;
 
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
 	ATank* GetPlayerTank() const;
 
 	// Moving barrel towards the crosshair
@@ -30,8 +33,6 @@ private:
 	bool GetLookVectorHitLocation(const FVector &LookDirection, FVector& HitLocation) const;
 
 public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditAnywhere)
 	float CrosshairXLocation = 0.5f;

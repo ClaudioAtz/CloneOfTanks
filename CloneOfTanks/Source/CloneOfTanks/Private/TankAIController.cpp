@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CloneOfTanks.h"
-#include "TankAIController.h"
+#include "Public/TankAIController.h"
 
 
 void ATankAIController::BeginPlay() {
@@ -16,8 +16,31 @@ void ATankAIController::BeginPlay() {
 	}
 }
 
-ATank* ATankAIController::GetControlledTank() const {
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	if (GetPlayerTank()) 
+	{
+		AimTowardsPlayer();
+	}
+}
+
+ATank* ATankAIController::GetControlledTank() const 
+{
 	return Cast<ATank>(GetPawn());
 }
 
+ATank* ATankAIController::GetPlayerTank() const
+{
+	auto PlayerController = GetWorld()->GetFirstPlayerController();
+	if (!PlayerController) return nullptr;
 
+	auto PlayerPawn = PlayerController->GetPawn();
+	if (!PlayerPawn) return nullptr;
+
+	return Cast<ATank>(PlayerPawn);
+}
+
+void ATankAIController::AimTowardsPlayer() const {
+	GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
+}

@@ -14,9 +14,19 @@ class CLONEOFTANKS_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
 	
+private:
+	virtual void BeginPlay() override;
+
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+	// Get reference to controlled tank
 	ATank* GetControlledTank() const;
 
-	virtual void BeginPlay() override;
-	
-	
+	// Get reference to player tank
+	ATank* GetPlayerTank() const;
+
+public:
+
+	void AimTowardsPlayer() const;
 };
