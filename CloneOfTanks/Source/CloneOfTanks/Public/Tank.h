@@ -6,6 +6,8 @@
 #include "TankAimingComponent.h"
 #include "Tank.generated.h"
 
+class TankBarrel;
+
 UCLASS()
 class CLONEOFTANKS_API ATank : public APawn
 {
@@ -17,7 +19,10 @@ public:
 	void AimAt(const FVector& HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+	void SetBarrelReference(UTankBarrel* BarrelToSet);
+
+	UPROPERTY(EditAnywhere, Category = Firing)
+	float LaunchSpeed = 100000.f; // TODO: Find sensible default
 
 protected:
 

@@ -5,6 +5,7 @@
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
 
+class UTankBarrel;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class CLONEOFTANKS_API UTankAimingComponent : public UActorComponent
@@ -14,19 +15,13 @@ class CLONEOFTANKS_API UTankAimingComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UTankAimingComponent();
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	void AimAt(const FVector& WorldSpaceAim);
+	void AimAt(const FVector& WorldSpaceAim, float LaunchSpeed);
 
-	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
-
-protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
+	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
 private:	
+	UTankBarrel* Barrel = nullptr;
 	
-	UStaticMeshComponent* Barrel = nullptr;
-	
+	void MoveBarrelTowards(const FVector &AimDirection);
 };
