@@ -2,6 +2,7 @@
 
 #include "CloneOfTanks.h"
 #include "TankPlayerController.h"
+#include "Public/Tank.h"
 
 void ATankPlayerController::BeginPlay() {
 	Super::BeginPlay();

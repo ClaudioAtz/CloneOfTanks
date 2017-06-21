@@ -14,8 +14,8 @@ class CLONEOFTANKS_API UTankBarrel : public UStaticMeshComponent
 	GENERATED_BODY()
 	
 public:
-
-	void Elevate(float DegreesPerSecond);
+	// -1 is downward max speed, +1 is upward max speed
+	void Elevate(float RelativeSpeed);
 	
 private:
 	UPROPERTY(EditAnywhere, Category = Setup)
