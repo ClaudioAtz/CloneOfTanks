@@ -17,7 +17,11 @@ class CLONEOFTANKS_API ATank : public APawn
 public:
 	// Sets default values for this pawn's properties
 	ATank();
+
 	void AimAt(const FVector& HitLocation);
+
+	UFUNCTION(BlueprintCallable)
+	void Fire();
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
