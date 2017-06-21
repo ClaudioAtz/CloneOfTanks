@@ -61,7 +61,4 @@ void UTankAimingComponent::MoveBarrelTowards(const FVector &AimDirection)
 	{
 		Turret->Rotate(-DeltaRotator.Yaw);
 	}
-
-
-	UE_LOG(LogTemp, Warning, TEXT("%f Moving barrel"), GetWorld()->GetTimeSeconds());
 }

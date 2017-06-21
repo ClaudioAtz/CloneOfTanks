@@ -87,7 +87,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(const FVector &LookDirectio
 	GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, StartLocation + LookDirection * LineTraceRange, ECollisionChannel::ECC_Visibility);
 
 	if (HitResult.GetActor()) {
-		UE_LOG(LogTemp, Warning, TEXT("Hitting %s"), *HitResult.GetActor()->GetName());
+		//UE_LOG(LogTemp, Warning, TEXT("Hitting %s"), *HitResult.GetActor()->GetName());
 		HitLocation = HitResult.Location;
 		return true;
 	}
