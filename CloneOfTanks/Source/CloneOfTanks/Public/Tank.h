@@ -33,6 +33,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float LaunchSpeed = 100000.f; // TODO: Find sensible default
 
+	UPROPERTY(EditAnywhere, Category = Firing)
+	float ReloadTimeInSeconds = 5.f;
+
 	UPROPERTY(EditAnywhere, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBlueprint; // check subclassof
 
@@ -50,4 +53,6 @@ private:
 
 	// Keeping local reference
 	UTankBarrel* Barrel;
+
+	double LastFireTime = 0;
 };
