@@ -2,10 +2,21 @@
 
 #include "CloneOfTanks.h"
 #include "Public/TankMovementComponent.h"
+#include "Public/TankTrack.h"
 
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
-	UE_LOG(LogTemp, Warning, TEXT("THrowing at %f"), Throw);
+	if (!LeftTrack || !RightTrack) return;
+
+	LeftTrack->SetThrottle(Throw);
+	RightTrack->SetThrottle(Throw);
 }
 
+void UTankMovementComponent::Initialise(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet)
+{
+	if (!LeftTrackToSet || !RightTrackToSet) return;
+
+	LeftTrack = LeftTrackToSet;
+	RightTrack = RightTrackToSet;
+}
