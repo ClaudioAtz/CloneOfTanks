@@ -9,6 +9,7 @@ class AProjectile;
 class UTankBarrel;
 class UTankTurret;
 class UTankAimingComponent;
+class UTankMovementComponent;
 
 UCLASS()
 class CLONEOFTANKS_API ATank : public APawn
@@ -37,11 +38,14 @@ public:
 	float ReloadTimeInSeconds = 5.f;
 
 	UPROPERTY(EditAnywhere, Category = Setup)
-	TSubclassOf<AProjectile> ProjectileBlueprint; // check subclassof
+	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 protected:
 
 	UTankAimingComponent* TankAimingComponent = nullptr;
+
+	UPROPERTY(BlueprintReadOnly)
+	UTankMovementComponent* TankMovementComponent = nullptr;
 
 private:
 
