@@ -5,10 +5,10 @@
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
 
-class ATank;
+class UTankAimingComponent;
 
 /**
- * 
+ * Responsible for helping players aim.
  */
 UCLASS()
 class CLONEOFTANKS_API ATankPlayerController : public APlayerController
@@ -17,14 +17,10 @@ class CLONEOFTANKS_API ATankPlayerController : public APlayerController
 	
 private:
 
-	ATank* GetControlledTank() const;
-
 	virtual void BeginPlay() override;
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	ATank* GetPlayerTank() const;
 
 	// Moving barrel towards the crosshair
 	void AimTowardsCrosshair();
@@ -32,6 +28,11 @@ private:
 	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
 	bool GetLookDirection(FVector& LookDirection) const;
 	bool GetLookVectorHitLocation(const FVector &LookDirection, FVector& HitLocation) const;
+
+protected:
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+	void FoundAimingComponent(UTankAimingComponent* AimingCompRef);
 
 public:
 

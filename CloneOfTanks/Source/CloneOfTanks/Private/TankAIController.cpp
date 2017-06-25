@@ -2,19 +2,10 @@
 
 #include "CloneOfTanks.h"
 #include "Public/TankAIController.h"
-#include "Public/Tank.h"
-
+#include "Public/TankAimingComponent.h"
 
 void ATankAIController::BeginPlay() {
 	Super::BeginPlay();
-
-	auto ControlledTank = GetControlledTank();
-	if (ControlledTank) {
-		UE_LOG(LogTemp, Warning, TEXT("AI Controlled tank %s"), *ControlledTank->GetName());
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("AI Not Controlling any tank"));
-	}
 }
 
 void ATankAIController::Tick(float DeltaTime)
@@ -23,32 +14,31 @@ void ATankAIController::Tick(float DeltaTime)
 
 	auto PlayerTank = GetPlayerTank();
 
-	if (PlayerTank)
+	if (!ensure(PlayerTank && GetPawn()))
 	{
 		MoveToActor(PlayerTank, AcceptanceRadius);
 
 		AimTowardsPlayer();
 
-		//GetControlledTank()->Fire();
+		auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+		if (!ensure(AimingComponent)) return;
+
+		AimingComponent->Fire();
 	}
 }
 
-ATank* ATankAIController::GetControlledTank() const 
-{
-	return Cast<ATank>(GetPawn());
-}
-
-ATank* ATankAIController::GetPlayerTank() const
+APawn* ATankAIController::GetPlayerTank() const
 {
 	auto PlayerController = GetWorld()->GetFirstPlayerController();
 	if (!PlayerController) return nullptr;
 
-	auto PlayerPawn = PlayerController->GetPawn();
-	if (!PlayerPawn) return nullptr;
-
-	return Cast<ATank>(PlayerPawn);
+	return PlayerController->GetPawn();
 }
 
 void ATankAIController::AimTowardsPlayer() const {
-	GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
+
+	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (!ensure(AimingComponent)) return;
+
+	AimingComponent->AimAt(GetPlayerTank()->GetActorLocation());
 }

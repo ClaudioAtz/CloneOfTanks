@@ -5,8 +5,6 @@
 #include "AIController.h"
 #include "TankAIController.generated.h"
 
-class ATank;
-
 /**
  * 
  */
@@ -21,11 +19,8 @@ private:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Get reference to controlled tank
-	ATank* GetControlledTank() const;
-
 	// Get reference to player tank
-	ATank* GetPlayerTank() const;
+	APawn* GetPlayerTank() const;
 
 	// How close can the AI tank get
 	float AcceptanceRadius = 300.f;

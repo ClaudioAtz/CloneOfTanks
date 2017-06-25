@@ -4,6 +4,7 @@
 #include "Public/TankBarrel.h"
 #include "Public/TankTurret.h"
 #include "Public/TankAimingComponent.h"
+#include "Public/Projectile.h"
 
 
 // Sets default values for this component's properties
@@ -14,7 +15,13 @@ UTankAimingComponent::UTankAimingComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
-void UTankAimingComponent::AimAt(const FVector& WorldSpaceAim, float LaunchSpeed)
+void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
+{
+	Barrel = BarrelToSet;
+	Turret = TurretToSet;
+}
+
+void UTankAimingComponent::AimAt(const FVector& WorldSpaceAim)
 {
 	if (!Barrel || !Turret) return;
 
@@ -31,16 +38,6 @@ void UTankAimingComponent::AimAt(const FVector& WorldSpaceAim, float LaunchSpeed
 	else {
 		UE_LOG(LogTemp, Warning, TEXT("%f %s suggestion failed"), GetWorld()->GetTimeSeconds(), *GetOwner()->GetName());
 	}
-}
-
-void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
-{
-	Barrel = BarrelToSet;
-}
-
-void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
-{
-	Turret = TurretToSet;
 }
 
 void UTankAimingComponent::MoveBarrelTowards(const FVector &AimDirection)
@@ -60,5 +57,25 @@ void UTankAimingComponent::MoveBarrelTowards(const FVector &AimDirection)
 	else // Avoid going the long-way round
 	{
 		Turret->Rotate(-DeltaRotator.Yaw);
+	}
+}
+
+
+void UTankAimingComponent::Fire()
+{
+	if (!ensure(Barrel && ProjectileBlueprint)) { return; }
+
+	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+
+	if (isReloaded) {
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+			ProjectileBlueprint,
+			Barrel->GetSocketLocation(FName("Projectile")),
+			Barrel->GetSocketRotation(FName("Projectile"))
+			);
+
+		Projectile->LaunchProjectile(LaunchSpeed);
+
+		LastFireTime = FPlatformTime::Seconds();
 	}
 }

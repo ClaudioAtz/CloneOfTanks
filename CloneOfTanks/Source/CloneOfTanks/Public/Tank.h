@@ -8,8 +8,6 @@
 class AProjectile;
 class UTankBarrel;
 class UTankTurret;
-class UTankAimingComponent;
-class UTankMovementComponent;
 
 UCLASS()
 class CLONEOFTANKS_API ATank : public APawn
@@ -20,43 +18,4 @@ public:
 	// Sets default values for this pawn's properties
 	ATank();
 
-	void AimAt(const FVector& HitLocation);
-
-	UFUNCTION(BlueprintCallable)
-	void Fire();
-
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
-
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetTurretReference(UTankTurret* TurretToSet);
-
-	UPROPERTY(EditAnywhere, Category = Firing)
-	float LaunchSpeed = 100000.f; // TODO: Find sensible default
-
-	UPROPERTY(EditAnywhere, Category = Firing)
-	float ReloadTimeInSeconds = 5.f;
-
-	UPROPERTY(EditAnywhere, Category = Setup)
-	TSubclassOf<AProjectile> ProjectileBlueprint;
-
-protected:
-
-	UTankAimingComponent* TankAimingComponent = nullptr;
-
-	UPROPERTY(BlueprintReadOnly)
-	UTankMovementComponent* TankMovementComponent = nullptr;
-
-private:
-
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	// Keeping local reference
-	UTankBarrel* Barrel;
-
-	double LastFireTime = 0;
 };
