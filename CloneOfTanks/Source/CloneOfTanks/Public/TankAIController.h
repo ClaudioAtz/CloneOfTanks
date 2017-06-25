@@ -27,6 +27,9 @@ private:
 	// Get reference to player tank
 	ATank* GetPlayerTank() const;
 
+	// How close can the AI tank get
+	float AcceptanceRadius = 300.f;
+
 public:
 
 	void AimTowardsPlayer() const;

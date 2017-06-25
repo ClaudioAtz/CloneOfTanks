@@ -20,11 +20,16 @@ void ATankAIController::BeginPlay() {
 void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (GetPlayerTank()) 
+
+	auto PlayerTank = GetPlayerTank();
+
+	if (PlayerTank)
 	{
+		MoveToActor(PlayerTank, AcceptanceRadius);
+
 		AimTowardsPlayer();
 
-		GetControlledTank()->Fire();
+		//GetControlledTank()->Fire();
 	}
 }
 
