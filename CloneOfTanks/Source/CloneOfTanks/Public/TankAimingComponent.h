@@ -43,7 +43,21 @@ private:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
+	virtual void BeginPlay() override;
+
+	/**
+	* Function called every frame on this ActorComponent. Override this function to implement custom logic to be executed every frame.
+	* Only executes if the component is registered, and also PrimaryComponentTick.bCanEverTick must be set to true.
+	*
+	* @param DeltaTime - The time since the last tick.
+	* @param TickType - The kind of tick this is, for example, are we paused, or 'simulating' in the editor
+	* @param ThisTickFunction - Internal tick function struct that caused this to run
+	*/
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+
 	void MoveBarrelTowards(const FVector &AimDirection);
+
+	bool IsBarrelMoving();
 
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
@@ -53,5 +67,5 @@ private:
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float LaunchSpeed = 100000.f; // TODO: Find sensible default
 	
-
+	FVector AimDirection;
 };
