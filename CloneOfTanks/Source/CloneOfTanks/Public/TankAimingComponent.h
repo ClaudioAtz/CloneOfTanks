@@ -7,7 +7,7 @@
 
 // Enum for aiming states
 UENUM()
-enum class EFiringStatus : uint8 { Reloading, Aiming, Locked };
+enum class EFiringStatus : uint8 { Reloading, Aiming, Locked, OutOfAmmo };
 
 class UTankBarrel;
 class UTankTurret;
@@ -28,6 +28,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void Fire();
 
+	UFUNCTION(BlueprintCallable)
+	int GetCurrentAmmo() const;
+
 	UPROPERTY(EditAnywhere, Category = "Firing")
 	float ReloadTimeInSeconds = 5.f;
 
@@ -39,6 +42,11 @@ public:
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringStatus FiringStatus = EFiringStatus::Reloading;
+
+	UPROPERTY(EditAnywhere, Category = "Firing")
+	int MaxAmmo = 5;
+
+	int CurrentAmmo = 1;
 
 private:
 
