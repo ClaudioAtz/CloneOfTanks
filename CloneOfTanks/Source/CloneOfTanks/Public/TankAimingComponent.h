@@ -29,10 +29,13 @@ public:
 	void Fire();
 
 	UFUNCTION(BlueprintCallable)
-	int GetCurrentAmmo() const;
+	int32 GetCurrentAmmo() const;
 
 	UPROPERTY(EditAnywhere, Category = "Firing")
-	float ReloadTimeInSeconds = 5.f;
+	float ReloadTimeInSeconds = 1.0f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	int32 CurrentAmmo = 5;
 
 	UPROPERTY(EditAnywhere, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
@@ -43,10 +46,6 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringStatus FiringStatus = EFiringStatus::Reloading;
 
-	UPROPERTY(EditAnywhere, Category = "Firing")
-	int MaxAmmo = 5;
-
-	int CurrentAmmo = 1;
 
 private:
 
