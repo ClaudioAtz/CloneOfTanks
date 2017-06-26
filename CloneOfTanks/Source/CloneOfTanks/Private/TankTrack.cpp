@@ -25,14 +25,11 @@ void UTankTrack::DriveTrack()
 	auto ForceLocation = GetComponentLocation();
 	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 
-	UE_LOG(LogTemp, Warning, TEXT("Applying force of %s"), *ForceApplied.ToString());
-
 	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
 }
 
 void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Hitting the ground"));
 	DriveTrack();
 	ApplySidewaysForce();
 

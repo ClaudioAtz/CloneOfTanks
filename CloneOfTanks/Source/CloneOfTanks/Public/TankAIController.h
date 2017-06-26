@@ -22,8 +22,10 @@ private:
 	// Get reference to player tank
 	APawn* GetPlayerTank() const;
 
+protected:
 	// How close can the AI tank get
-	float AcceptanceRadius = 300.f;
+	UPROPERTY(EditAnywhere, Category = "Setup")
+	float AcceptanceRadius = 30.f;
 
 public:
 

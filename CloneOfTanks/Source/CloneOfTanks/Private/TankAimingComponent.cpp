@@ -87,17 +87,14 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 
 	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Reloading"));
 		FiringStatus = EFiringStatus::Reloading;
 	} 
 	else if (IsBarrelMoving())
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Aiming"));
 		FiringStatus = EFiringStatus::Aiming;
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Locked"));
 		FiringStatus = EFiringStatus::Locked;
 	}
 }
@@ -109,4 +106,9 @@ bool UTankAimingComponent::IsBarrelMoving()
 		return false;
 	}
 	return !AimDirection.Equals(Barrel->GetForwardVector(), 0.01f);
+}
+
+EFiringStatus UTankAimingComponent::GetFiringState() const
+{
+	return FiringStatus;
 }
