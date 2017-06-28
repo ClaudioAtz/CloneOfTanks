@@ -3,6 +3,7 @@
 #include "CloneOfTanks.h"
 #include "Public/TankAIController.h"
 #include "Public/TankAimingComponent.h"
+#include "Public/Tank.h"
 
 void ATankAIController::BeginPlay() {
 	Super::BeginPlay();
@@ -44,4 +45,25 @@ void ATankAIController::AimTowardsPlayer() const {
 	if (!ensure(AimingComponent)) return;
 
 	AimingComponent->AimAt(GetPlayerTank()->GetActorLocation());
+}
+
+void ATankAIController::SetPawn(APawn* InPawn)
+{
+	Super::SetPawn(InPawn);
+
+	if (InPawn)
+	{
+		auto PossessedTank = Cast<ATank>(InPawn);
+		if (!ensure(PossessedTank)) { return; }
+
+		PossessedTank->OnTankDeath.AddUniqueDynamic(this, &ATankAIController::OnPossessedTankDeath);
+	}
+}
+
+void ATankAIController::OnPossessedTankDeath()
+{
+	auto Pawn = GetPawn();
+	if (Pawn) {
+		Pawn->DetachFromControllerPendingDestroy();
+	}
 }

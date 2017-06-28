@@ -19,8 +19,13 @@ private:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	virtual void SetPawn(APawn* InPawn) override;
+
 	// Get reference to player tank
 	APawn* GetPlayerTank() const;
+
+	UFUNCTION()
+	void OnPossessedTankDeath();
 
 protected:
 	// How close can the AI tank get

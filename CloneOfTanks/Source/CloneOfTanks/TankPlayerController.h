@@ -22,12 +22,17 @@ private:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	virtual void SetPawn(APawn* InPawn) override;
+
 	// Moving barrel towards the crosshair
 	void AimTowardsCrosshair();
 
 	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
 	bool GetLookDirection(FVector& LookDirection) const;
 	bool GetLookVectorHitLocation(const FVector &LookDirection, FVector& HitLocation) const;
+
+	UFUNCTION()
+	void OnPossessedTankDeath();
 
 protected:
 
