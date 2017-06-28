@@ -10,7 +10,7 @@ class UProjectileMovementComponent;
 /**
 * 
 * Class that handles a Projectile. It destroy itself when hitting something after a specified delay. 
-* //TODO: Make a projectile pool?
+* TODO: Make a projectile pool?
 */
 UCLASS()
 class CLONEOFTANKS_API AProjectile : public AActor
@@ -44,6 +44,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float DestroyDelay = 0.5f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float ProjectileDamage = 20.f;
 
 private:
 	UFUNCTION()
